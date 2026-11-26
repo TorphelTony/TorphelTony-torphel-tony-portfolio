@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080d18" />
+    <meta
+      name="description"
+      content="Torphel Tony is an Angular and full-stack engineer creating scalable enterprise applications, micro frontends, and AI-powered products."
+    />
+    <meta name="author" content="Torphel Tony &lt;torpheltony06@gmail.com&gt;" />
+    <link rel="canonical" href="__SITE_ORIGIN__/" />
+    <meta property="og:title" content="Torphel Tony — Engineering What’s Next" />
+    <meta
+      property="og:description"
+      content="An interactive portfolio exploring Angular architecture, intelligent products, and thoughtful engineering."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="__SITE_ORIGIN__/" />
+    <meta property="og:image" content="__SITE_ORIGIN__/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Torphel Tony — Engineering What’s Next" />
+    <meta
+      name="twitter:description"
+      content="Angular architecture, intelligent products, and thoughtful engineering by Torphel Tony."
+    />
+    <meta name="twitter:image" content="__SITE_ORIGIN__/og-image.png" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "name": "Torphel Tony — Engineering What’s Next",
+        "url": "__SITE_ORIGIN__/",
+        "mainEntity": {
+          "@type": "Person",
+          "name": "Torphel Tony",
+          "email": "mailto:torpheltony06@gmail.com",
+          "jobTitle": "Software Engineer",
+          "url": "__SITE_ORIGIN__/",
+          "sameAs": [
+            "https://github.com/TorphelTony",
+            "https://www.linkedin.com/in/torphel-tony-5766a1145/"
+          ]
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Software project discovery call",
+        "description": "Request a 30-minute online conversation about Angular, full-stack, or AI integration work. Availability is confirmed by email.",
+        "provider": {
+          "@type": "Person",
+          "name": "Torphel Tony",
+          "email": "mailto:torpheltony06@gmail.com"
+        },
+        "url": "__SITE_ORIGIN__/#contact"
+      }
+    </script>
+    <title>Torphel Tony — Engineering What’s Next</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <canvas id="world" aria-hidden="true"></canvas>
+    <div class="world-vignette" aria-hidden="true"></div>
+    <div class="page-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Torphel Tony, back to start"
+        ><span class="brand-symbol">T<span>/</span>T</span
+        ><span class="brand-name">TORPHEL<br />TONY</span></a
+      >
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#about">About</a><a href="#work">Work</a><a href="#experience">Experience</a
+        ><a href="#contact">Contact</a>
+      </nav>
+      <a class="header-link" href="mailto:torpheltony06@gmail.com">Let’s connect</a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
+        <span></span><span></span>
+      </button>
+      <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation" hidden>
+        <a href="#about">About</a><a href="#work">Work</a><a href="#experience">Experience</a
+        ><a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <nav class="chapter-rail" aria-label="Page chapters">
+      <span class="rail-title">THE JOURNEY</span>
+      <a href="#home" aria-label="Introduction" aria-current="location"
+        ><span>01</span><i></i><b>INTRO</b></a
+      >
+      <a href="#about" aria-label="Approach"><span>02</span><i></i><b>APPROACH</b></a>
+      <a href="#work" aria-label="Selected work"><span>03</span><i></i><b>WORK</b></a>
+      <a href="#experience" aria-label="Experience"><span>04</span><i></i><b>JOURNEY</b></a>
+      <a href="#contact" aria-label="Contact"><span>05</span><i></i><b>CONTACT</b></a>
+      <span class="rail-progress">SCROLL <strong id="scroll-percent">00</strong>%</span>
+    </nav>
+    <main id="main">
+      <section class="chapter hero" id="home" data-scene="0" aria-labelledby="hero-title">
+        <div class="chapter-content hero-content">
+          <p class="eyebrow">
+            <span class="eyebrow-dot"></span> ANGULAR DEVELOPER · FULL-STACK ENGINEER
+          </p>
+          <h1 id="hero-title">
+            I build the<br /><span class="italic-accent">space between</span><br />ideas and
+            <span class="outline-word">impact.</span>
+          </h1>
+          <div class="hero-description">
+            <p>
+              I’m Torphel Tony. I architect expressive interfaces, scalable systems, and intelligent
+              products that make complex work feel simple.
+            </p>
+            <a class="pill-link" href="#work">Explore my work</a>
+          </div>
+          <div class="hero-foot">
+            <span>KERALA, INDIA <i>✳</i> BUILDING EVERYWHERE</span
+            ><span class="scroll-prompt">SCROLL TO EXPLORE <span class="scroll-line"></span></span>
+          </div>
+        </div>
+        <div class="scene-caption scene-caption-top" aria-hidden="true">
+          SYSTEM / 001<br />IDEAS IN MOTION
+        </div>
+        <div class="scene-caption scene-caption-bottom" aria-hidden="true">ANGULAR · AI · .NET</div>
+      </section>
+      <section class="chapter approach" id="about" data-scene="1" aria-labelledby="about-title">
+        <div class="chapter-content approach-content">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> CHAPTER 02 / THE APPROACH</p>
+          <h2 id="about-title">
+            Systems with<br /><span class="italic-accent">a human side.</span>
+          </h2>
+          <div class="approach-grid">
+            <p class="section-lead">Great engineering should disappear into the experience.</p>
+            <div>
+              <p>
+                I’m an Angular and full-stack developer with 5+ years of experience turning
+                enterprise complexity into clear, dependable software. My work spans modular
+                frontends, secure .NET APIs, and practical AI integration.
+              </p>
+              <p>
+                Whether I’m shaping architecture, tuning performance, or mentoring a team, I care
+                about how the whole system feels to the people using it.
+              </p>
+            </div>
+          </div>
+          <div class="metric-row" role="group" aria-label="Career highlights">
+            <div>
+              <strong>5<span>+</span></strong
+              ><span>YEARS IN ENTERPRISE<br />DEVELOPMENT</span>
+            </div>
+            <div>
+              <strong>25<span>%</span></strong
+              ><span>PERFORMANCE GAIN<br />ON APPLICATIONS</span>
+            </div>
+            <div>
+              <strong>40<span>%</span></strong
+              ><span>FEWER REGRESSION<br />ISSUES WITH CYPRESS</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="work-section" id="work" data-scene="2" aria-labelledby="work-title">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> CHAPTER 03 / SELECTED WORK</p>
+          <h2 id="work-title">Ideas, made<br /><span class="italic-accent">real.</span></h2>
+          <p>
+            Enterprise platforms across AI, research, maritime operations, and finance. Each project
+            starts with a complex problem and ends with a clearer way forward.
+          </p>
+        </div>
+        <div class="project-grid">
+          <article class="project-card project-card-wide" data-reveal>
+            <div class="project-visual visual-ppt" aria-hidden="true">
+              <div class="visual-grid"></div>
+              <div class="ppt-window">
+                <div class="ppt-toolbar">
+                  <span></span><span></span><span></span><b>THE IDEA ENGINE</b>
+                </div>
+                <div class="ppt-slide">
+                  <small>FROM CONVERSATION TO CREATION</small
+                  ><strong>MAKE IDEAS<br />VISIBLE.</strong>
+                  <div class="slide-orb"></div>
+                </div>
+              </div>
+              <div class="floating-prompt">“Build a deck from this brief”<span>✳</span></div>
+              <div class="visual-corner">AI / 001</div>
+            </div>
+            <div class="project-content">
+              <div>
+                <span class="project-kind">GENERATIVE AI / PRODUCTIVITY</span>
+                <h3>PPTGen</h3>
+                <p>
+                  A conversational assistant that analyzes prompts, text, and uploaded images
+                  through backend-connected LLM APIs to generate PowerPoint presentations.
+                </p>
+              </div>
+              <div class="project-tags">
+                <span>Angular 21</span><span>LLM APIs</span><span>AI Assistant</span>
+              </div>
+            </div>
+          </article>
+          <article class="project-card" data-reveal>
+            <div class="project-visual visual-compass" aria-hidden="true">
+              <div class="visual-grid"></div>
+              <div class="compass-ring ring-outer"></div>
+              <div class="compass-ring ring-inner"></div>
+              <div class="compass-center">C<span>✳</span></div>
+              <div class="compass-label label-one">PROBLEM</div>
+              <div class="compass-label label-two">INSIGHT</div>
+              <div class="compass-label label-three">SOLUTION</div>
+              <div class="visual-corner">RESEARCH / 002</div>
+            </div>
+            <div class="project-content">
+              <div>
+                <span class="project-kind">AI / RESEARCH PLATFORM</span>
+                <h3>COMPASS</h3>
+                <p>
+                  AI-powered research analysis that extracts problems and solutions from PhD papers
+                  and recommends products from images.
+                </p>
+              </div>
+              <div class="project-tags">
+                <span>Angular 19</span><span>Micro Frontend</span><span>AI</span>
+              </div>
+            </div>
+          </article>
+          <article class="project-card" data-reveal>
+            <div class="project-visual visual-pal" aria-hidden="true">
+              <div class="visual-grid"></div>
+              <div class="route-arc"></div>
+              <div class="route-dot route-a"></div>
+              <div class="route-dot route-b"></div>
+              <div class="route-dot route-c"></div>
+              <div class="pal-label">CREW LIFECYCLE<br /><strong>IN MOTION.</strong></div>
+              <div class="visual-corner">MARITIME / 003</div>
+            </div>
+            <div class="project-content">
+              <div>
+                <span class="project-kind">MARITIME / ENTERPRISE</span>
+                <h3>PAL5</h3>
+                <p>
+                  Secure cloud-connected workflows for seafarer onboarding, tracking, and lifecycle
+                  management.
+                </p>
+              </div>
+              <div class="project-tags">
+                <span>Angular 17</span><span>.NET Core</span><span>Azure SQL</span>
+              </div>
+            </div>
+          </article>
+          <article class="project-card" data-reveal>
+            <div class="project-visual visual-loan" aria-hidden="true">
+              <div class="visual-grid"></div>
+              <div class="loan-card">
+                <small>LOAN ORIGINATION SYSTEM</small><strong>50<span>%</span></strong>
+                <p>FASTER PROCESSING</p>
+                <div class="loan-bars"><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="visual-corner">FINANCE / 004</div>
+            </div>
+            <div class="project-content">
+              <div>
+                <span class="project-kind">FINANCE / WORKFLOW</span>
+                <h3>CV LOS</h3>
+                <p>
+                  Automated loan workflows that cut processing time in half while making each step
+                  easier to follow.
+                </p>
+              </div>
+              <div class="project-tags">
+                <span>Angular 10</span><span>PL/SQL</span><span>Automation</span>
+              </div>
+            </div>
+          </article>
+        </div>
+        <div class="more-work" data-reveal>
+          <div class="more-heading">
+            <h3>More work. <em>More impact.</em></h3>
+            <span>ADDITIONAL PROJECTS</span>
+          </div>
+          <div class="more-row">
+            <span>01</span>
+            <h4>TW LOS</h4>
+            <p>UX and automation improvements that increased loan approvals by 40%.</p>
+            <b>ANGULAR 6 / CYPRESS</b>
+          </div>
+          <div class="more-row">
+            <span>02</span>
+            <h4>JUSSUIT</h4>
+            <p>Litigation workflow improvements that lifted user satisfaction by 35%.</p>
+            <b>.NET MVC / PL/SQL</b>
+          </div>
+        </div>
+      </section>
+      <section
+        class="chapter expertise"
+        id="expertise"
+        data-scene="3"
+        aria-labelledby="expertise-title"
+      >
+        <div class="chapter-content expertise-content">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> THE ENGINEERING STACK</p>
+          <h2 id="expertise-title">
+            Built for<br /><span class="italic-accent">what’s next.</span>
+          </h2>
+          <p class="expertise-intro">
+            A toolkit that moves from the interface to the infrastructure, with performance and
+            maintainability in every layer.
+          </p>
+          <div class="skill-grid">
+            <div>
+              <span>01 / FRONTEND</span>
+              <h3>The experience layer</h3>
+              <p>
+                Angular 6–21 · TypeScript · RxJS · NgRx · Signals · Module Federation · SCSS ·
+                Angular Material
+              </p>
+            </div>
+            <div>
+              <span>02 / INTELLIGENCE</span>
+              <h3>The thinking layer</h3>
+              <p>
+                Generative AI · LLM API integration · AI assistants · research and recommendation
+                workflows
+              </p>
+            </div>
+            <div>
+              <span>03 / SYSTEMS</span>
+              <h3>The foundation</h3>
+              <p>.NET Core · C# · REST APIs · Azure SQL · AWS · GitHub Actions · Cypress · RBAC</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="experience-section"
+        id="experience"
+        data-scene="4"
+        aria-labelledby="experience-title"
+      >
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> CHAPTER 04 / EXPERIENCE</p>
+          <h2 id="experience-title">The path<br /><span class="italic-accent">so far.</span></h2>
+          <p>Building stronger products, architecture, and teams across enterprise domains.</p>
+        </div>
+        <div class="experience-list">
+          <article class="experience-item" data-reveal>
+            <div class="experience-time">JAN 2026 — PRESENT <span>REMOTE</span></div>
+            <div>
+              <h3>Software Engineer</h3>
+              <a href="https://netconnectdigital.com/" target="_blank" rel="noopener noreferrer"
+                >NCDA</a
+              >
+              <p>
+                Architecting micro frontends with Module Federation, building reusable Angular
+                components, and integrating LLM-driven assistants. Improving rendering with Signals
+                and zoneless change detection while contributing to reviews, mentoring, and secure
+                access design.
+              </p>
+            </div>
+          </article>
+          <article class="experience-item" data-reveal>
+            <div class="experience-time">AUG — DEC 2025 <span>ON-SITE</span></div>
+            <div>
+              <h3>Software Developer</h3>
+              <a href="https://www.mariapps.com/" target="_blank" rel="noopener noreferrer"
+                >MariApps Marine Solutions</a
+              >
+              <p>
+                Delivered maritime HR applications with .NET Core and Azure SQL, optimized backend
+                architecture, and addressed security findings.
+              </p>
+            </div>
+          </article>
+          <article class="experience-item" data-reveal>
+            <div class="experience-time">SEP 2021 — AUG 2025 <span>ON-SITE</span></div>
+            <div>
+              <h3>Software Developer</h3>
+              <a href="https://macomsolutions.com/" target="_blank" rel="noopener noreferrer"
+                >MACOM Evolv</a
+              >
+              <p>
+                Built Angular and .NET Core applications, improved performance by 25%, and used
+                Cypress automation to reduce regression issues by 40%.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section class="chapter contact" id="contact" data-scene="5" aria-labelledby="contact-title">
+        <div class="chapter-content contact-content">
+          <p class="eyebrow"><span class="eyebrow-dot"></span> FINAL CHAPTER / LET’S CONNECT</p>
+          <h2 id="contact-title">Let’s build <span class="italic-accent">what’s next.</span></h2>
+          <p class="contact-intro">
+            Tell me what you have in mind. I’ll reply to arrange a conversation.
+          </p>
+          <div class="discovery-card">
+            <div class="discovery-main">
+              <ol class="form-steps" aria-label="Contact form progress">
+                <li class="is-active" aria-current="step"><span>1</span>Your details</li>
+                <li><span>2</span>Your project</li>
+                <li><span>3</span>Pick a time</li>
+              </ol>
+              <div class="step-progress" aria-hidden="true"><span></span></div>
+              <form id="discovery-form" novalidate>
+                <input
+                  name="website_check"
+                  type="text"
+                  class="honey"
+                  tabindex="-1"
+                  autocomplete="off"
+                  aria-hidden="true"
+                />
+                <input name="startedAt" type="hidden" />
+                <fieldset class="form-panel" data-step="0">
+                  <legend class="sr-only">Your details</legend>
+                  <p class="step-kicker">STEP 1 OF 3</p>
+                  <h3 tabindex="-1">Your details</h3>
+                  <p class="step-subtitle">So I know who I’m talking to.</p>
+                  <div class="form-grid">
+                    <div class="form-field">
+                      <label for="lead-name">Full name <span aria-hidden="true">*</span></label
+                      ><input
+                        id="lead-name"
+                        name="fullName"
+                        type="text"
+                        autocomplete="name"
+                        placeholder="Jane Cooper"
+                        required
+                        maxlength="100"
+                        aria-describedby="name-error"
+                      /><small id="name-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field">
+                      <label for="lead-email">Email <span aria-hidden="true">*</span></label
+                      ><input
+                        id="lead-email"
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        inputmode="email"
+                        placeholder="jane@company.com"
+                        required
+                        maxlength="254"
+                        aria-describedby="email-error"
+                      /><small id="email-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field field-wide">
+                      <label for="lead-phone"
+                        >Phone / WhatsApp <span aria-hidden="true">*</span></label
+                      >
+                      <div class="phone-composite">
+                        <select name="dialCode" aria-label="Country dial code">
+                          <option value="+91">IN +91</option>
+                          <option value="+1">US +1</option>
+                          <option value="+44">UK +44</option>
+                          <option value="+971">AE +971</option>
+                          <option value="+61">AU +61</option>
+                          <option value="+49">DE +49</option>
+                          <option value="+65">SG +65</option></select
+                        ><input
+                          id="lead-phone"
+                          name="phone"
+                          type="tel"
+                          autocomplete="tel"
+                          inputmode="tel"
+                          placeholder="98765 43210"
+                          required
+                          maxlength="24"
+                          aria-describedby="phone-error"
+                        />
+                      </div>
+                      <small id="phone-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field">
+                      <label for="lead-company">Company / brand <em>OPTIONAL</em></label
+                      ><input
+                        id="lead-company"
+                        name="company"
+                        type="text"
+                        autocomplete="organization"
+                        placeholder="Acme Studio"
+                        maxlength="100"
+                      />
+                    </div>
+                    <div class="form-field">
+                      <label for="lead-website">Website or Instagram <em>OPTIONAL</em></label
+                      ><input
+                        id="lead-website"
+                        name="website"
+                        type="text"
+                        autocomplete="url"
+                        placeholder="acme.com or @acme"
+                        maxlength="200"
+                      />
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset class="form-panel" data-step="1" hidden>
+                  <legend class="sr-only">Your project</legend>
+                  <p class="step-kicker">STEP 2 OF 3</p>
+                  <h3 tabindex="-1">Your project</h3>
+                  <p class="step-subtitle">A few details help me prepare a useful reply.</p>
+                  <div class="form-grid">
+                    <div class="form-field">
+                      <label for="project-type"
+                        >Project type <span aria-hidden="true">*</span></label
+                      ><select
+                        id="project-type"
+                        name="projectType"
+                        required
+                        aria-describedby="type-error"
+                      >
+                        <option value="">Select a project type</option>
+                        <option>Web application</option>
+                        <option>Angular architecture</option>
+                        <option>AI integration</option>
+                        <option>Consulting</option>
+                        <option>Other</option></select
+                      ><small id="type-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field">
+                      <label for="project-budget"
+                        >Budget range <span aria-hidden="true">*</span></label
+                      ><select
+                        id="project-budget"
+                        name="budget"
+                        required
+                        aria-describedby="budget-error"
+                      >
+                        <option value="">Select a range</option>
+                        <option>Under $2,000</option>
+                        <option>$2,000–$5,000</option>
+                        <option>$5,000–$10,000</option>
+                        <option>$10,000+</option>
+                        <option>Let’s discuss</option></select
+                      ><small id="budget-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field field-wide">
+                      <label for="project-brief"
+                        >Project brief <span aria-hidden="true">*</span></label
+                      ><textarea
+                        id="project-brief"
+                        name="projectBrief"
+                        rows="5"
+                        minlength="20"
+                        maxlength="2000"
+                        placeholder="What are you building, and what would you like help with?"
+                        required
+                        aria-describedby="brief-error"
+                      ></textarea
+                      ><small id="brief-error" class="field-error"></small>
+                    </div>
+                  </div>
+                </fieldset>
+                <fieldset class="form-panel" data-step="2" hidden>
+                  <legend class="sr-only">Preferred time</legend>
+                  <p class="step-kicker">STEP 3 OF 3</p>
+                  <h3 tabindex="-1">Pick a time</h3>
+                  <p class="step-subtitle">
+                    Suggest a time for a 30-minute discovery call. I’ll confirm availability by
+                    email.
+                  </p>
+                  <div class="form-grid">
+                    <div class="form-field">
+                      <label for="preferred-date"
+                        >Preferred date <span aria-hidden="true">*</span></label
+                      ><input
+                        id="preferred-date"
+                        name="preferredDate"
+                        type="date"
+                        required
+                        aria-describedby="date-error"
+                      /><small id="date-error" class="field-error"></small>
+                    </div>
+                    <div class="form-field">
+                      <label for="preferred-time"
+                        >Preferred time <span aria-hidden="true">*</span></label
+                      ><input
+                        id="preferred-time"
+                        name="preferredTime"
+                        type="time"
+                        required
+                        aria-describedby="time-error"
+                      /><small id="time-error" class="field-error"></small>
+                    </div>
+                  </div>
+                  <p class="time-note">
+                    Times are in your local time zone. This is a request, not a confirmed booking.
+                  </p>
+                  <div class="captcha-block">
+                    <div class="g-recaptcha" data-sitekey="__RECAPTCHA_SITE_KEY__"></div>
+                    <p id="captcha-help">Spam protection is required before sending.</p>
+                  </div>
+                </fieldset>
+                <div class="form-actions">
+                  <p id="form-status" role="status" aria-live="polite">Takes about a minute.</p>
+                  <div>
+                    <button id="back-button" class="secondary-button" type="button" hidden>
+                      Back</button
+                    ><button id="next-button" class="primary-button" type="button">
+                      Continue <span aria-hidden="true">→</span></button
+                    ><button id="submit-button" class="primary-button" type="submit" hidden>
+                      Send inquiry <span aria-hidden="true">→</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <aside class="discovery-side" aria-label="Your host and brief">
+              <div class="host-id">
+                <span class="host-avatar" aria-hidden="true">TT</span>
+                <div>
+                  <span class="sidebar-kicker">YOUR HOST</span><strong>Torphel Tony</strong
+                  ><span>Angular &amp; full-stack engineer</span>
+                </div>
+              </div>
+              <ul class="call-meta">
+                <li>◷ <span>Discovery call · 30 min</span></li>
+                <li>⌁ <span>Online meeting, details by email</span></li>
+                <li>◎ <span>Suggest a convenient time</span></li>
+              </ul>
+              <div class="brief-preview">
+                <p class="sidebar-kicker">YOUR BRIEF</p>
+                <p id="brief-summary" aria-live="polite">Fills in as you go.</p>
+              </div>
+              <a
+                class="whatsapp-inline"
+                data-whatsapp
+                href="/api/whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Prefer WhatsApp? Message me ↗</a
+              >
+            </aside>
+          </div>
+          <p class="contact-direct">
+            Or email me directly:
+            <a href="mailto:torpheltony06@gmail.com">torpheltony06@gmail.com</a>
+          </p>
+          <div class="contact-links">
+            <a
+              href="https://www.linkedin.com/in/torphel-tony-5766a1145/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LINKEDIN</a
+            ><a href="https://github.com/TorphelTony" target="_blank" rel="noopener noreferrer"
+              >GITHUB</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <span>© <span id="year">2026</span> TORPHEL TONY</span><span>DESIGNED TO KEEP MOVING.</span
+      ><a href="#home">BACK TO START</a>
+    </footer>
+    <a
+      class="whatsapp-float"
+      data-whatsapp
+      href="/api/whatsapp"
+      aria-label="Chat with Torphel Tony on WhatsApp"
+      target="_blank"
+      rel="noopener noreferrer"
+      ><span aria-hidden="true">✆</span><span>WhatsApp</span></a
+    >
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  </body>
+</html>

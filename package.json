@@ -2,8 +2,24 @@
   "name": "torphel-tony-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Static portfolio for Torphel Tony",
+  "type": "module",
+  "description": "3D portfolio and discovery form for Torphel Tony",
   "scripts": {
-    "build": "node scripts/build.mjs"
+    "build": "npm run typecheck && node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src api netlify && npm run lint:html",
+    "test": "node --experimental-strip-types --test src/features/contact-form/*.spec.ts",
+    "format:check": "prettier --check 'src/**/*.{ts,css,html,mjs}' 'api/**/*.ts' 'netlify/**/*.ts' 'scripts/*.mjs'",
+    "lint:html": "html-validate src/index.html"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.11",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.15.0",
+    "html-validate": "^11.23.0",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.74.0"
   }
 }
