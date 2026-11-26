@@ -1,2 +1,3 @@
 import { handleContact } from './server.ts';
-export default handleContact;
+export const POST = handleContact;
+export const GET = handleContact;
