@@ -36,7 +36,7 @@ Without the site key, the page explains that the form is being connected and off
 
 ## Deployment and implementation notes
 
-- `vercel.json` and `netlify.toml` publish `build/`. Vercel's root `api/` and Netlify's `netlify/functions/` provide `/api/contact` and `/api/whatsapp`.
+- `vercel.json` and `netlify.toml` publish `build/`. Vercel's root `api/` and Netlify's `netlify/functions/` provide `/api/contact` and `/api/whatsapp`. Those JavaScript functions are bundled from TypeScript in `src/` during the build and committed so Vercel can package them without unresolved imports.
 - The server validates fields, timing, honeypot, payload size, and forwards to Apps Script. Apps Script verifies reCAPTCHA, rate limits by email, escapes notification HTML, protects Sheets from formula injection, appends the lead, and emails Torphel Tony with `replyTo` set to the submitter.
 - Chapter 3's disappearing scene was caused by the work section's almost opaque background painting over the fixed canvas. The work section now has a translucent gradient, so the canvas remains visible while its scroll animation continues. There is no Three.js camera or GSAP timeline in this implementation.
 - Breakpoints: mobile below 640px, tablet 640–1024px, desktop from 1025px. The form stacks on mobile and splits into form/sidebar on desktop. `prefers-reduced-motion` reveals content without animation.

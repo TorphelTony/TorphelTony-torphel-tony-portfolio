@@ -7,9 +7,9 @@
   "scripts": {
     "build": "npm run typecheck && node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src api netlify && npm run lint:html",
+    "lint": "eslint src && npm run lint:html",
     "test": "node --experimental-strip-types --test src/features/contact-form/*.spec.ts",
-    "format:check": "prettier --check 'src/**/*.{ts,css,html,mjs}' 'api/**/*.ts' 'netlify/**/*.ts' 'scripts/*.mjs'",
+    "format:check": "prettier --check 'src/**/*.{ts,css,html,mjs}' 'scripts/*.mjs'",
     "lint:html": "html-validate src/index.html"
   },
   "devDependencies": {

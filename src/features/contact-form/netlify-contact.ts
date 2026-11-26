@@ -1,3 +1,3 @@
-import { handleContact } from '../../src/features/contact-form/server';
+import { handleContact } from './server.ts';
 export default handleContact;
 export const config = { path: '/api/contact' };

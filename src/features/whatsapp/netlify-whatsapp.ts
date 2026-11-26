@@ -1,3 +1,3 @@
-import { handleWhatsApp } from '../../src/features/contact-form/server';
+import { handleWhatsApp } from '../contact-form/server.ts';
 export default handleWhatsApp;
 export const config = { path: '/api/whatsapp' };
