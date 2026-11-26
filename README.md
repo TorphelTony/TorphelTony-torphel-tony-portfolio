@@ -1,6 +1,6 @@
 # Torphel Tony — Portfolio
 
-A responsive, static portfolio for Torphel Tony, built from the supplied résumé. It uses plain HTML, CSS, and JavaScript, so there are no runtime dependencies.
+A responsive, static portfolio for Torphel Tony, built from the supplied résumé. The 3D scrolling scene is drawn procedurally in a canvas with plain JavaScript. It honors reduced-motion settings and needs no runtime dependencies.
 
 ## Run locally
 
