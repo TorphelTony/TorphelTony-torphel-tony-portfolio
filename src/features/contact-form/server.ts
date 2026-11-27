@@ -49,7 +49,34 @@ export async function handleContact(request: Request): Promise<Response> {
       redirect: 'follow',
       signal: AbortSignal.timeout(12000),
     });
-    const result = (await response.json()) as { ok?: boolean };
+    const result = (await response.json()) as { ok?: boolean; message?: string };
+    if (!result.ok) {
+      const reasons: Record<string, string> = {
+        'Captcha failed.': 'captcha_rejected',
+        'Captcha is required.': 'captcha_missing',
+        'Unauthorized.': 'webhook_key_mismatch',
+        'Configuration missing.': 'script_configuration_missing',
+        'Please wait before sending again.': 'rate_limited',
+        'Submission failed.': 'script_execution_failed',
+      };
+      console.warn(
+        'Contact delivery rejected:',
+        reasons[result.message || ''] || 'upstream_rejected',
+      );
+      if (result.message === 'Captcha failed.' || result.message === 'Captcha is required.')
+        return json(
+          {
+            ok: false,
+            message: 'Spam verification expired or failed. Please complete reCAPTCHA again.',
+          },
+          400,
+        );
+      if (result.message === 'Please wait before sending again.')
+        return json(
+          { ok: false, message: 'Please wait a minute before sending another inquiry.' },
+          429,
+        );
+    }
     if (!response.ok || !result.ok)
       return json(
         { ok: false, message: 'The inquiry could not be delivered. Please email me directly.' },
