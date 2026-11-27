@@ -47,9 +47,13 @@ export async function handleContact(request: Request): Promise<Response> {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify({ ...data, webhookKey: key }),
       redirect: 'follow',
-      signal: AbortSignal.timeout(12000),
+      signal: AbortSignal.timeout(25000),
     });
-    const result = (await response.json()) as { ok?: boolean; message?: string };
+    const result = (await response.json()) as {
+      ok?: boolean;
+      message?: string;
+      notificationSent?: boolean;
+    };
     if (!result.ok) {
       const reasons: Record<string, string> = {
         'Captcha failed.': 'captcha_rejected',
@@ -82,8 +86,15 @@ export async function handleContact(request: Request): Promise<Response> {
         { ok: false, message: 'The inquiry could not be delivered. Please email me directly.' },
         502,
       );
-    return json({ ok: true });
-  } catch {
+    if (result.notificationSent === false) console.warn('Contact saved: notification_pending');
+    return json({ ok: true, notificationSent: result.notificationSent });
+  } catch (error) {
+    console.error(
+      'Contact delivery failed:',
+      error instanceof Error && error.name === 'TimeoutError'
+        ? 'upstream_timeout'
+        : 'upstream_unavailable',
+    );
     return json(
       { ok: false, message: 'The form is temporarily unavailable. Please email me directly.' },
       502,

@@ -36,6 +36,14 @@ Without the site key, the page explains that the form is being connected and off
 
 ## Deployment and implementation notes
 
+### If a lead is saved but its email is missing
+
+Update your Apps Script editor with the latest `google-apps-script/Code.gs`, keeping Script Properties intact. Select **authorizeAndTestEmail** in the editor and click **Run**. Complete Google's Mail authorization if prompted. This sends a setup test to `torpheltony06@gmail.com`; check that account's Inbox and Spam. If the run fails, its Execution entry gives the permission or quota error.
+
+Next, choose **Deploy → Manage deployments → Edit → New version → Deploy** for the existing web app. Keep its `/exec` URL unchanged. Saving code in the editor alone does not update the deployed web app.
+
+Notification status is recorded in columns N–O as `PENDING`, `SENT`, or `FAILED` plus a safe error code. If mail fails, the lead stays saved and the visitor sees that notification is delayed. After fixing Mail authorization or quota, run **retryPendingNotifications** in the editor. It processes PENDING/FAILED rows and skips SENT rows. For an older saved lead without a status, mark its column N as `PENDING` only after confirming its notification was not delivered, then run the retry function.
+
 - `vercel.json` and `netlify.toml` publish `build/`. Vercel's root `api/` and Netlify's `netlify/functions/` provide `/api/contact` and `/api/whatsapp`. Those JavaScript functions are bundled from TypeScript in `src/` during the build and committed so Vercel can package them without unresolved imports.
 - The server validates fields, timing, honeypot, payload size, and forwards to Apps Script. Apps Script verifies reCAPTCHA, rate limits by email, escapes notification HTML, protects Sheets from formula injection, appends the lead, and emails Torphel Tony with `replyTo` set to the submitter.
 - Chapter 3's disappearing scene was caused by the work section's almost opaque background painting over the fixed canvas. The work section now has a translucent gradient, so the canvas remains visible while its scroll animation continues. There is no Three.js camera or GSAP timeline in this implementation.

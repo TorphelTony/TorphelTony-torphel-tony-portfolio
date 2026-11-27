@@ -27,6 +27,7 @@ if (form) {
     .toISOString()
     .slice(0, 10);
   let current = 0;
+  let delivered = false;
   const read = (): Inquiry => {
     const values = new FormData(form);
     const field = (key: string): string => String(values.get(key) ?? '').trim();
@@ -134,6 +135,7 @@ if (form) {
   back?.addEventListener('click', () => show(current - 1));
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (delivered || submit?.disabled) return;
     if (!validateStep(current)) return;
     const data = read();
     if (!data.recaptchaToken) {
@@ -150,25 +152,37 @@ if (form) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+        signal: AbortSignal.timeout(35000),
       });
-      const result = (await response.json()) as { ok?: boolean; message?: string };
+      const result = (await response.json()) as {
+        ok?: boolean;
+        message?: string;
+        notificationSent?: boolean;
+      };
       if (!response.ok || !result.ok)
         throw new Error(result.message || 'The message could not be sent. Please try again.');
-      if (status) status.textContent = 'Thanks! Your inquiry was sent. I’ll reply by email.';
-      form.reset();
-      window.grecaptcha?.reset();
-      started.value = String(Date.now());
-      updateSummary();
-      show(0);
-      if (status) status.textContent = 'Thanks! Your inquiry was sent. I’ll reply by email.';
+      delivered = true;
+      if (back) back.hidden = true;
+      if (status) {
+        status.textContent =
+          result.notificationSent === false
+            ? 'Your inquiry is saved. The email notification is delayed. Please don’t submit it again.'
+            : 'Thanks! Your inquiry was sent. I’ll reply by email.';
+      }
     } catch (error) {
       if (status)
         status.textContent =
           error instanceof Error ? error.message : 'The message could not be sent.';
     } finally {
       if (submit) {
-        submit.disabled = false;
-        submit.innerHTML = 'Send inquiry <span aria-hidden="true">→</span>';
+        submit.disabled = delivered;
+        submit.innerHTML = delivered
+          ? 'Inquiry saved ✓'
+          : 'Send inquiry <span aria-hidden="true">→</span>';
+      }
+      if (status) {
+        status.setAttribute('tabindex', '-1');
+        status.focus();
       }
     }
   });

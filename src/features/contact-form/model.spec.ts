@@ -76,6 +76,16 @@ test('server forwards with a private key and rejects an Apps Script failure resp
     assert.equal(response.status, 502);
     assert.equal((await response.json()).ok, false);
     assert.equal(JSON.parse(forwarded).webhookKey, 'test-only-key');
+    globalThis.fetch = async () => Response.json({ ok: true, notificationSent: false });
+    const saved = await handleContact(
+      new Request('https://example.com/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(valid),
+      }),
+    );
+    assert.equal(saved.status, 200);
+    assert.deepEqual(await saved.json(), { ok: true, notificationSent: false });
     for (const [message, expectedStatus] of [
       ['Captcha failed.', 400],
       ['Please wait before sending again.', 429],
