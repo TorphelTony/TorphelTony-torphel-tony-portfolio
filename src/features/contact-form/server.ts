@@ -53,6 +53,7 @@ export async function handleContact(request: Request): Promise<Response> {
       ok?: boolean;
       message?: string;
       notificationSent?: boolean;
+      calendarStatus?: string;
     };
     if (!result.ok) {
       const reasons: Record<string, string> = {
@@ -87,7 +88,16 @@ export async function handleContact(request: Request): Promise<Response> {
         502,
       );
     if (result.notificationSent === false) console.warn('Contact saved: notification_pending');
-    return json({ ok: true, notificationSent: result.notificationSent });
+    const calendarStatus = [
+      'HELD',
+      'CONFLICT',
+      'FAILED',
+      'NOT_CONFIGURED',
+      'INVALID_TIME',
+    ].includes(result.calendarStatus || '')
+      ? result.calendarStatus
+      : undefined;
+    return json({ ok: true, notificationSent: result.notificationSent, calendarStatus });
   } catch (error) {
     console.error(
       'Contact delivery failed:',

@@ -71,6 +71,11 @@ export function validateInquiry(data: Inquiry): Record<string, string> {
     errors.preferredDate = 'Choose a valid date.';
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(text(data.preferredTime)))
     errors.preferredTime = 'Choose a valid time.';
-  if (text(data.timezone).length > 80) errors.timezone = 'Invalid time zone.';
+  try {
+    if (!text(data.timezone) || text(data.timezone).length > 80) throw new Error();
+    new Intl.DateTimeFormat('en', { timeZone: data.timezone }).format();
+  } catch {
+    errors.timezone = 'Invalid time zone.';
+  }
   return errors;
 }

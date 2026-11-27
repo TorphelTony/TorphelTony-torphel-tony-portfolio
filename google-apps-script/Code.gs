@@ -1,5 +1,5 @@
 /** Set SHEET_ID, RECAPTCHA_SECRET, and WEBHOOK_KEY in Script Properties. */
-const HEADERS = ['Timestamp', 'Full Name', 'Email', 'Phone/WhatsApp', 'Company', 'Website/Instagram', 'Project Type', 'Budget Range', 'Project Details', 'Preferred Date', 'Preferred Time', 'Time Zone', 'Brief Summary', 'Notification Status', 'Notification Error'];
+const HEADERS = ['Timestamp', 'Full Name', 'Email', 'Phone/WhatsApp', 'Company', 'Website/Instagram', 'Project Type', 'Budget Range', 'Project Details', 'Preferred Date', 'Preferred Time', 'Time Zone', 'Brief Summary', 'Notification Status', 'Notification Error', 'Calendar Status', 'Calendar Event ID', 'Calendar Error', 'Start UTC', 'End UTC'];
 const NOTIFICATION_TO = 'torpheltony06@gmail.com';
 
 function doPost(e) {
@@ -43,13 +43,15 @@ function doPost(e) {
     let row;
     try {
       if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
-      sheet.getRange(1, 14, 1, 2).setValues([HEADERS.slice(13)]);
-      sheet.appendRow([new Date(),clean.fullName,clean.email,clean.dialCode + ' ' + clean.phone,clean.company,clean.website,clean.projectType,clean.budget,clean.projectBrief,clean.preferredDate,clean.preferredTime,clean.timezone,brief,'PENDING',''].map(safeCell));
+      sheet.getRange(1, 14, 1, 7).setValues([HEADERS.slice(13)]);
+      sheet.appendRow([new Date(),clean.fullName,clean.email,clean.dialCode + ' ' + clean.phone,clean.company,clean.website,clean.projectType,clean.budget,clean.projectBrief,clean.preferredDate,clean.preferredTime,clean.timezone,brief,'PENDING','','PENDING','','','',''].map(safeCell));
       row = sheet.getLastRow();
+      sheet.getRange(row, 10, 1, 3).setNumberFormat('@').setValues([[clean.preferredDate,clean.preferredTime,clean.timezone]]);
       cache.put(rateKey, '1', 60);
     } finally { lock.releaseLock(); }
+    const calendarStatus = createSavedCalendarHold(sheet, row);
     const notificationSent = sendSavedNotification(sheet, row);
-    return ContentService.createTextOutput(JSON.stringify({ok:true,notificationSent:notificationSent})).setMimeType(ContentService.MimeType.JSON);
+    return ContentService.createTextOutput(JSON.stringify({ok:true,notificationSent:notificationSent,calendarStatus:calendarStatus})).setMimeType(ContentService.MimeType.JSON);
   } catch (error) {
     console.error(error);
     return reply(false, 'Submission failed.');
@@ -65,13 +67,75 @@ function authorizeAndTestEmail() {
   console.log('Google accepted the setup test email for ' + NOTIFICATION_TO + '. Check its Inbox and Spam.');
 }
 
+/** Set CALENDAR_ID, then run this once in the editor to grant Calendar access. */
+function authorizeAndCheckCalendar() {
+  const calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
+  if (!calendarId) throw new Error('Set CALENDAR_ID in Script Properties first.');
+  const calendar = CalendarApp.getCalendarById(calendarId);
+  if (!calendar) throw new Error('The execution account cannot access CALENDAR_ID.');
+  calendar.getEvents(new Date(), new Date(Date.now() + 30 * 60000));
+  console.log('Calendar access authorized: ' + calendar.getName() + ' (' + calendar.getTimeZone() + '). No event was created.');
+}
+
+function requestedCalendarSlot(date, time, timezone) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time) || !timezone) throw new Error('INVALID_TIME');
+  const local = date + ' ' + time;
+  const start = Utilities.parseDate(local, timezone, 'yyyy-MM-dd HH:mm');
+  if (Utilities.formatDate(start, timezone, 'yyyy-MM-dd HH:mm') !== local || start.getTime() <= Date.now() || start.getTime() > Date.now() + 90 * 86400000) throw new Error('INVALID_TIME');
+  return {start:start,end:new Date(start.getTime() + 30 * 60000)};
+}
+
+function createSavedCalendarHold(sheet, row) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const values = sheet.getRange(row, 1, 1, 20).getValues()[0];
+    if (values[16]) return String(values[15]);
+    const calendarId = PropertiesService.getScriptProperties().getProperty('CALENDAR_ID');
+    if (!calendarId) {
+      sheet.getRange(row, 16, 1, 5).setValues([['NOT_CONFIGURED','','CALENDAR_ID_MISSING','','']]);
+      return 'NOT_CONFIGURED';
+    }
+    let slot;
+    try { slot = requestedCalendarSlot(String(values[9]), String(values[10]), String(values[11])); }
+    catch (_) {
+      sheet.getRange(row, 16, 1, 5).setValues([['INVALID_TIME','','INVALID_TIME','','']]);
+      return 'INVALID_TIME';
+    }
+    try {
+      const calendar = CalendarApp.getCalendarById(calendarId);
+      if (!calendar) throw new Error('Calendar unavailable');
+      const busy = calendar.getEvents(slot.start, slot.end).some(function (event) {
+        return event.getTransparency() !== CalendarApp.EventTransparency.TRANSPARENT && event.getStartTime().getTime() < slot.end.getTime() && event.getEndTime().getTime() > slot.start.getTime();
+      });
+      if (busy) {
+        sheet.getRange(row, 16, 1, 5).setValues([['CONFLICT','','SLOT_UNAVAILABLE',slot.start.toISOString(),slot.end.toISOString()]]);
+        return 'CONFLICT';
+      }
+      const event = calendar.createEvent('Portfolio discovery call — ' + String(values[1]), slot.start, slot.end, {
+        description:'Portfolio inquiry\nName: ' + values[1] + '\nEmail: ' + values[2] + '\nProject: ' + values[6] + '\nBudget: ' + values[7] + '\nBrief: ' + values[8] + '\nRequested time: ' + values[9] + ' ' + values[10] + ' (' + values[11] + ')\nLead row: ' + row + '\nPrivate hold. Meeting details are to be confirmed.',
+        location:'Online — meeting details to be confirmed'
+      });
+      // Persist the event ID before further updates so a retry cannot create a duplicate.
+      sheet.getRange(row, 16, 1, 5).setValues([['HELD',event.getId(),'',slot.start.toISOString(),slot.end.toISOString()]]);
+      event.setVisibility(CalendarApp.Visibility.PRIVATE);
+      return 'HELD';
+    } catch (_) {
+      sheet.getRange(row, 16).setValue('FAILED');
+      sheet.getRange(row, 18).setValue('CALENDAR_ACCESS_OR_WRITE_FAILED');
+      console.error('Calendar hold failed: CALENDAR_ACCESS_OR_WRITE_FAILED');
+      return 'FAILED';
+    }
+  } finally { lock.releaseLock(); }
+}
+
 function sendSavedNotification(sheet, row) {
   const lock = LockService.getScriptLock();
   lock.waitLock(10000);
   try {
-    const values = sheet.getRange(row, 1, 1, 15).getValues()[0];
+    const values = sheet.getRange(row, 1, 1, 20).getValues()[0];
     if (values[13] === 'SENT') return true;
-    const details = [['Name',values[1]],['Email',values[2]],['Phone / WhatsApp',values[3]],['Company',values[4]],['Website / Instagram',values[5]],['Project type',values[6]],['Budget',values[7]],['Project brief',values[8]],['Preferred time',values[9] + ' ' + values[10] + ' (' + values[11] + ')']];
+    const details = [['Name',values[1]],['Email',values[2]],['Phone / WhatsApp',values[3]],['Company',values[4]],['Website / Instagram',values[5]],['Project type',values[6]],['Budget',values[7]],['Project brief',values[8]],['Preferred time',values[9] + ' ' + values[10] + ' (' + values[11] + ')'],['Calendar status',values[15] || 'Not requested'],['Calendar event ID',values[16] || '']];
     try {
       const html = '<h2>New portfolio inquiry</h2><table cellpadding="8" cellspacing="0">' + details.map(function (item) { return '<tr><th align="left">' + escapeHtml(item[0]) + '</th><td>' + escapeHtml(item[1]) + '</td></tr>'; }).join('') + '</table>';
       MailApp.sendEmail({to:NOTIFICATION_TO,replyTo:String(values[2]),subject:'New portfolio inquiry from ' + String(values[1]),body:details.map(function (item) { return item[0] + ': ' + item[1]; }).join('\n'),htmlBody:html});

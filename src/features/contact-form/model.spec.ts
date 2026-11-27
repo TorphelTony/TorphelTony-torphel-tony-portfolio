@@ -86,6 +86,20 @@ test('server forwards with a private key and rejects an Apps Script failure resp
     );
     assert.equal(saved.status, 200);
     assert.deepEqual(await saved.json(), { ok: true, notificationSent: false });
+    globalThis.fetch = async () =>
+      Response.json({ ok: true, notificationSent: true, calendarStatus: 'HELD' });
+    const held = await handleContact(
+      new Request('https://example.com/api/contact', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(valid),
+      }),
+    );
+    assert.deepEqual(await held.json(), {
+      ok: true,
+      notificationSent: true,
+      calendarStatus: 'HELD',
+    });
     for (const [message, expectedStatus] of [
       ['Captcha failed.', 400],
       ['Please wait before sending again.', 429],

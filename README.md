@@ -36,6 +36,20 @@ Without the site key, the page explains that the form is being connected and off
 
 ## Deployment and implementation notes
 
+### Add the selected time to Google Calendar
+
+The updated Apps Script creates a private 30-minute hold after a verified submission. It converts the visitor's local date/time using the supplied IANA time zone, accepts future times within 90 days, and checks the calendar for overlapping busy events while holding a script lock. Calendar details are never exposed in a public availability feed. The form reports a held, conflicting, or pending time; it does not send calendar invitations or create Google Meet links.
+
+To activate this feature in your existing Google web app:
+
+1. Paste the latest `google-apps-script/Code.gs` into the Apps Script editor and save it. Preserve the existing Script Properties.
+2. Add Script Property `CALENDAR_ID` with value `torphel06@gmail.com` (the connected primary calendar), or the ID of another calendar the execution account can edit.
+3. Select **authorizeAndCheckCalendar → Run**, then complete Google's Calendar authorization. This checks access without creating an event.
+4. Choose **Deploy → Manage deployments → Edit → New version → Deploy** for the existing web app. Keep its `/exec` URL unchanged.
+5. Submit a new inquiry for a free future time. Confirm `HELD` and the event ID in Sheet columns P–T, and confirm the event in Calendar. A second inquiry for the same occupied time should be saved with `CONFLICT` and no additional calendar event.
+
+Columns P–T record Calendar Status, Calendar Event ID, Calendar Error, Start UTC, and End UTC. An event ID prevents the helper from creating a second event for the same saved row. Script locking coordinates portfolio submissions; changes made independently in Calendar can still occur between the availability check and event creation. Existing leads are not automatically added to Calendar.
+
 ### If a lead is saved but its email is missing
 
 Update your Apps Script editor with the latest `google-apps-script/Code.gs`, keeping Script Properties intact. Select **authorizeAndTestEmail** in the editor and click **Run**. Complete Google's Mail authorization if prompted. This sends a setup test to `torpheltony06@gmail.com`; check that account's Inbox and Spam. If the run fails, its Execution entry gives the permission or quota error.

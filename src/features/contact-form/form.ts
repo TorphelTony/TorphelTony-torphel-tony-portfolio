@@ -26,6 +26,9 @@ if (form) {
   date.min = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
     .toISOString()
     .slice(0, 10);
+  date.max = new Date(Date.now() + 90 * 86400000 - new Date().getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 10);
   let current = 0;
   let delivered = false;
   const read = (): Inquiry => {
@@ -96,7 +99,13 @@ if (form) {
     preferredTime: 'time-error',
   };
   const validateStep = (index: number): boolean => {
-    const errors = validateInquiry(read());
+    const data = read();
+    const errors = validateInquiry(data);
+    if (index === 2 && !errors.preferredDate && !errors.preferredTime) {
+      const requested = new Date(`${data.preferredDate}T${data.preferredTime}`);
+      if (requested.getTime() <= Date.now() || requested.getTime() > Date.now() + 90 * 86400000)
+        errors.preferredTime = 'Choose a future time within the next 90 days.';
+    }
     let first: HTMLElement | null = null;
     for (const input of panels[index].querySelectorAll<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -158,16 +167,22 @@ if (form) {
         ok?: boolean;
         message?: string;
         notificationSent?: boolean;
+        calendarStatus?: string;
       };
       if (!response.ok || !result.ok)
         throw new Error(result.message || 'The message could not be sent. Please try again.');
       delivered = true;
       if (back) back.hidden = true;
       if (status) {
-        status.textContent =
-          result.notificationSent === false
-            ? 'Your inquiry is saved. The email notification is delayed. Please don’t submit it again.'
-            : 'Thanks! Your inquiry was sent. I’ll reply by email.';
+        const calendarMessage =
+          result.calendarStatus === 'HELD'
+            ? 'A 30-minute calendar hold was added. Meeting details will be confirmed by email.'
+            : result.calendarStatus === 'CONFLICT'
+              ? 'That time is already occupied. I’ll email you to arrange another time.'
+              : result.calendarStatus === 'INVALID_TIME'
+                ? 'The requested time could not be reserved. I’ll email you to arrange a time.'
+                : 'I’ll reply by email to confirm the time.';
+        status.textContent = `Your inquiry is saved. ${calendarMessage}${result.notificationSent === false ? ' The email notification is delayed. Please don’t submit again.' : ''}`;
       }
     } catch (error) {
       if (status)
